@@ -1,8 +1,8 @@
 ### ebook-to-pdf
 
 - eBook을 PDF로 변환하는 프로그램
-- eBook 프로그램이 노트북을 지원하지 않는 경우
-  - 블루스택에서 안드로이드 에뮬레이터를 설치하여, 노트북에서 앱 실행
+- eBook 프로그램이 PC 환경을 지원하지 않는 경우
+  - 블루스택에서 안드로이드 에뮬레이터를 설치하여, PC에서 앱 실행
   - https://www.bluestacks.com/
 - print_mouse_position.py
   - 마우스 포인터의 위치를 주기적으로 출력해 주는 프로그램
