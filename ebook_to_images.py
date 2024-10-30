@@ -5,7 +5,18 @@ import keyboard
 import os
 
 
-def capture_and_save_image(region, page_number):
+def get_next_page_number(images_directory):
+    existing_files = os.listdir(images_directory)
+    png_files = [f for f in existing_files if f.endswith(".png")]
+
+    if not png_files:
+        return 1
+
+    max_number = max(int(f.split(".")[0]) for f in png_files)
+    return max_number + 1
+
+
+def capture_and_save_image(region, page_number, images_directory):
     x1, y1, x2, y2 = region
     width = x2 - x1
     height = y2 - y1
@@ -13,28 +24,29 @@ def capture_and_save_image(region, page_number):
     screenshot = pyautogui.screenshot(region=(x1, y1, width, height))
     screenshot = screenshot.resize((width * 2, height * 2))
 
-    current_directory = os.path.dirname(os.path.abspath(__file__))
-    images_directory = os.path.join(current_directory, "images")
-
-    if not os.path.exists(images_directory):
-        os.makedirs(images_directory)
-
     filename = os.path.join(images_directory, f"{page_number}.png")
     screenshot.save(filename, dpi=(600, 600))
 
     print(f"{filename}이 저장되었습니다.")
 
 
-def click_button(button_coords):
-    pyautogui.moveTo(button_coords[0], button_coords[1])
+def click_screen(screen_coords):
+    pyautogui.moveTo(screen_coords[0], screen_coords[1])
     pyautogui.click()
 
 
 def main():
-    page_number = 1
-    region_to_capture = (15, 300, 1061, 1649)
+    region_to_capture = (0, 295, 1079, 1684)
     button_coords = (1024, 1692)
     capturing = False
+
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    images_directory = os.path.join(current_directory, "images")
+
+    if not os.path.exists(images_directory):
+        os.makedirs(images_directory)
+
+    page_number = get_next_page_number(images_directory)
 
     while True:
         if keyboard.is_pressed("s") and not capturing:
@@ -42,10 +54,17 @@ def main():
             print("이미지 저장 작업을 시작합니다.")
 
         if capturing:
-            capture_and_save_image(region_to_capture, page_number)
-            click_button(button_coords)
+            keyboard.press_and_release("alt+tab")
+            time.sleep(1)
+
+            keyboard.press_and_release("alt+tab")
+            time.sleep(1)
+
+            capture_and_save_image(region_to_capture, page_number, images_directory)
+            keyboard.press_and_release("right")
+
             page_number += 1
-            time.sleep(2)
+            time.sleep(1)
 
 
 if __name__ == "__main__":
