@@ -7,13 +7,13 @@ import os
 
 def get_next_page_number(images_directory):
     existing_files = os.listdir(images_directory)
-    png_files = [f for f in existing_files if f.endswith(".png")]
+    png_files = sorted(
+        [int(f.split(".")[0]) for f in existing_files if f.endswith(".png")]
+    )
 
-    if not png_files:
-        return 1
-
-    max_number = max(int(f.split(".")[0]) for f in png_files)
-    return max_number + 1
+    for i in range(1, max(png_files) + 2):
+        if i not in png_files:
+            return i
 
 
 def capture_and_save_image(region, page_number, images_directory):
