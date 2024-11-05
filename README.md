@@ -23,3 +23,5 @@
 - OCR 작업
   - PDF24에서 무료 OCR 기능 지원
   - https://tools.pdf24.org/ko/ocr-pdf
+- merge_pdfs.py
+  - 용량 문제로 인해 PDF를 여러 개로 분할하여 작업한 경우 최종적으로 한 개의 PDF로 병합해 주는 프로그램
