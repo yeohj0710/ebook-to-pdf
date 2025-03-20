@@ -11,6 +11,9 @@ def get_next_page_number(images_directory):
         [int(f.split(".")[0]) for f in existing_files if f.endswith(".png")]
     )
 
+    if not png_files:
+        return 1
+
     for i in range(1, max(png_files) + 2):
         if i not in png_files:
             return i
@@ -36,7 +39,7 @@ def click_screen(screen_coords):
 
 
 def main():
-    region_to_capture = (0, 295, 1079, 1684)
+    region_to_capture = (0, 255, 1079, 1664)
     button_coords = (1024, 1692)
     capturing = False
 
